@@ -11,7 +11,9 @@ import java.util.Scanner;
  *
  * @author User
  */
-public class UrlInfo {
+public class Url1 {
+
+    public static String fileTosend = sendFileUrl();
 
     public static String sendFileUrl() {
         String url;

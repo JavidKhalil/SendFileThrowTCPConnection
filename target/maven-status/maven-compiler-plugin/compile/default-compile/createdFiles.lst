@@ -1,7 +1,9 @@
 server\TcpClient.class
+com\bean\Upload.class
+com\bean\Url1.class
 server\TcpServer.class
 com\bean\User.class
-com\bean\UrlInfo.class
+threads\ThreadsTwo.class
 com\bean\TcpInfo.class
-com\bean\TcpUtil.class
 main\Main.class
+threads\ThreadsOne.class

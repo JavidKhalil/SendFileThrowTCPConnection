@@ -5,26 +5,26 @@
  */
 package main;
 
+import java.io.IOException;
+import threads.ThreadsOne;
+
 /**
  *
  * @author User
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
-        String user;
-        String url;
-        String tcpIn;
-        String tcpIp;
-        int tcpPort;
-        user = com.bean.User.userInfo();
-        url = com.bean.UrlInfo.sendFileUrl();
-        tcpIn = com.bean.TcpInfo.tcpInfo();
-        String[] str = tcpIn.split(":");
-        tcpIp = str[0];
-        tcpPort = Integer.parseInt(str[1]);
+        ThreadsOne one = new ThreadsOne();
+//        ThreadsTwo two = new ThreadsTwo();
+
+        Thread one1 = new Thread(one);
+  //      Thread two1 = new Thread(two);
+
+        one1.start();
+    //    two1.start();
+
     }
-//Və bu ip port-a daxil olub həmin faylı göndərəcəksiniz göndərdikdən sonra da mesaj çapa verəcəksiniz ki, uğurla göndərildi.
 
 }

@@ -8,13 +8,12 @@ import java.net.Socket;
 
 public class TcpClient {
 
-    public static void main(String[] args) throws IOException {
+    public static void beginClient() throws IOException {
         Socket sock = null;
-        String host = com.bean.TcpInfo.tcpInfo().split(":")[0];
-        int port = 5679;
-        String url = com.bean.UrlInfo.sendFileUrl();
-        int fileSize = Integer.MAX_VALUE;
-
+        String host = com.bean.TcpInfo.tcpIpForClient;
+        int port = Integer.getInteger(com.bean.TcpInfo.tcpPortForClient);
+        String fileToSend = com.bean.Url1.fileTosend;
+        int fileSize = 50000;
         int bytesRead;
         int current = 0;
         FileOutputStream fos = null;
@@ -24,7 +23,7 @@ public class TcpClient {
             System.out.println("Connecting...");
             byte[] mybytearray = new byte[fileSize];
             InputStream is = sock.getInputStream();
-            fos = new FileOutputStream(url);
+            fos = new FileOutputStream(fileToSend);
             bos = new BufferedOutputStream(fos);
             bytesRead = is.read(mybytearray, 0, mybytearray.length);
             current = bytesRead;
@@ -36,7 +35,7 @@ public class TcpClient {
             } while (bytesRead > -1);
             bos.write(mybytearray, 0, current);
             bos.flush();
-            System.out.println("File " + url + " downloaded (" + current + " bytes read)");
+            System.out.println("File " + fileToSend + " downloaded (" + current + " bytes read)");
         } finally {
             if (fos != null) {
                 fos.close();

@@ -17,11 +17,12 @@ import java.net.Socket;
  *
  * @author User
  */
-public class TcpUtil {
+public class Upload {
+
+    public static int port = Integer.getInteger(TcpInfo.tcpPortForClient);
+    public static String fileToSend = Url1.fileTosend;
 
     public static void uploadFile() throws IOException {
-        int port = Integer.parseInt(com.bean.TcpInfo.tcpInfo().split(":")[1]);
-        String url = com.bean.UrlInfo.sendFileUrl();
         ServerSocket serverSocket = new ServerSocket(port);
         Socket socket = null;
         InputStream in = null;
@@ -40,7 +41,7 @@ public class TcpUtil {
             }
 
             try {
-                out = new FileOutputStream(url);
+                out = new FileOutputStream(fileToSend);
             } catch (FileNotFoundException ex) {
                 System.out.println("File not found. ");
             }
@@ -58,6 +59,5 @@ public class TcpUtil {
             serverSocket.close();
         }
     }
-
 
 }

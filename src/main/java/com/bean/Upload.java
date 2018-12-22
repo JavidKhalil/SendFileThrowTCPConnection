@@ -19,7 +19,7 @@ import java.net.Socket;
  */
 public class Upload {
 
-    public static int port = Integer.getInteger(TcpInfo.tcpPortForClient);
+    public static int port = TcpInfo.tcpPortForClient;
     public static String fileToSend = Url1.fileTosend;
 
     public static void uploadFile() throws IOException {

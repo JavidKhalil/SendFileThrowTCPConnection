@@ -6,7 +6,7 @@
 package main;
 
 import java.io.IOException;
-import threads.ThreadsOne;
+import server.TcpServer;
 
 /**
  *
@@ -14,17 +14,19 @@ import threads.ThreadsOne;
  */
 public class Main {
 
+    public static String host = com.bean.TcpInfo.tcpIpForServer;
+    public static int port = com.bean.TcpInfo.tcpPortForServer;
+    public static String whereWriteFile = "test.txt";
+    public static String user = com.bean.User.user;
+    public static String message = "Salam dost";
+
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        ThreadsOne one = new ThreadsOne();
-//        ThreadsTwo two = new ThreadsTwo();
+        Thread threadOne = new Thread(new TcpServer());
+        threadOne.start();
+        threadOne.join(3000);
 
-        Thread one1 = new Thread(one);
-  //      Thread two1 = new Thread(two);
-
-        one1.start();
-    //    two1.start();
-
+        Client1ForSocketServer.sendFile(host, port, "D:\bir.txt");
     }
 
 }

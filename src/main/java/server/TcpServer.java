@@ -1,55 +1,70 @@
 package server;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.ServerSocket;
+import java.io.InputStream;
 import java.net.Socket;
-import threads.ThreadsTwo;
 
-public class TcpServer {
+public class TcpServer implements Runnable {
 
-    public static void beginServer() throws IOException {
+    public static String host = com.bean.TcpInfo.tcpIpForServer;
+    public static int port = com.bean.TcpInfo.tcpPortForServer;
+    public static String whereWriteFile = "test.txt";
+    public static String user = com.bean.User.user;
+    public static String message = "Salam dost";
 
-        int port = Integer.parseInt(com.bean.TcpInfo.tcpPortForServer);
-        String url = com.bean.Url1.sendFileUrl();
+    @Override
+    public void run() {
+        try {
+            TcpServer.beginSendToClient(host, port, whereWriteFile, user, message);
+        } catch (IOException ex) {
+            System.out.println("Could not connect to server");
+            ex.printStackTrace();
+        }
+    }
 
-        FileInputStream fis = null;
-        BufferedInputStream bis = null;
-        OutputStream os = null;
-        ServerSocket servsock = null;
+    public static void beginSendToClient(String host, int portNum,
+            String whereWriteFile, String user, String message) throws IOException {
+        int FILE_SIZE = 6022386;
+        int bytesRead;
+        int current = 0;
+        FileOutputStream fos = null;
+        BufferedOutputStream bos = null;
         Socket sock = null;
+        try {
+            sock = new Socket(host, portNum);
+            System.out.println("Connecting...");
+            byte[] mybytearray = new byte[FILE_SIZE];
+            InputStream is = sock.getInputStream();
+            fos = new FileOutputStream(whereWriteFile);
+            bos = new BufferedOutputStream(fos);
+            bytesRead = is.read(mybytearray, 0, mybytearray.length);
+            current = bytesRead;
 
-        servsock = new ServerSocket(port);
-        while (true) {
-            System.out.println("Waiting...");
-            ThreadsTwo two = new ThreadsTwo();
-            Thread two1 = new Thread(two);
-            two1.start();
-            if ((sock = servsock.accept()) != null) {
-                System.out.println("Accepted connection : " + sock);
+            do {
+                bytesRead
+                        = is.read(mybytearray, current, (mybytearray.length - current));
+                if (bytesRead >= 0) {
+                    current += bytesRead;
+                }
+            } while (bytesRead > -1);
+
+            bos.write(mybytearray, 0, current);
+            bos.flush();
+            System.out.println("File " + whereWriteFile
+                    + " downloaded (" + current + " bytes read)");
+        } finally {
+            if (fos != null) {
+                fos.close();
             }
-            File myFile = new File(url);
-            byte[] mybytearray = new byte[(int) myFile.length()];
-            fis = new FileInputStream(myFile);
-            bis = new BufferedInputStream(fis);
-            bis.read(mybytearray, 0, mybytearray.length);
-            os = sock.getOutputStream();
-            System.out.println("Sending " + url + "(" + mybytearray.length + " bytes)");
-            os.write(mybytearray, 0, mybytearray.length);
-            os.flush();
-            System.out.println("Done.");
-            if (bis != null) {
-                bis.close();
-            }
-            if (os != null) {
-                os.close();
+            if (bos != null) {
+                bos.close();
             }
             if (sock != null) {
                 sock.close();
             }
         }
     }
+
 }

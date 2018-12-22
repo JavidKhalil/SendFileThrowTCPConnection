@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class TcpInfo {
 
     public static String tcpIpForServer = getTcpIpForServer();
-    public static String tcpPortForServer = getTcpPortForServer();
-    public static String tcpPortForClient = tcpPortForServer;
+    public static int tcpPortForServer = getTcpPortForServer();
+    public static int tcpPortForClient = tcpPortForServer;
     public static String tcpIpForClient = tcpIpForServer;
 
     public static String getTcpIpForServer() {
@@ -20,10 +20,10 @@ public class TcpInfo {
         return tcpIpForServer;
     }
 
-    public static String getTcpPortForServer() {
+    public static int getTcpPortForServer() {
         Scanner ss1 = new Scanner(System.in);
         System.out.println("Please enter the port number of server");
-        tcpPortForServer = ss1.next();
+        tcpPortForServer = ss1.nextInt();
         return tcpPortForServer;
     }
 

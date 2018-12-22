@@ -9,15 +9,14 @@ package threads;
  *
  * @author User
  */
-public class ThreadsOne implements Runnable{
+public class ThreadsOne {
 
-    @Override
-    public void run() {
-        try {
-        server.TcpServer.beginServer();
-        } catch(Exception e){
-        e.getMessage();
-        }
-    }
-    
+//    @Override
+//    public void run() {
+//        try {
+//        server.TcpServer.beginSendToClient(host, 0, whereWriteFile, user, message);
+//        } catch(Exception e){
+//        e.getMessage();
+//        }
+//    }
 }

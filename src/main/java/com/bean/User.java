@@ -13,9 +13,11 @@ import java.util.Scanner;
  */
 public class User {
 
+    public static String name;
+    public static String surname;
+    public static String user = name + ":" + surname;
+
     public static String userInfo() {
-        String name;
-        String surname;
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter your name");
         name = sc.next();

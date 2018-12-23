@@ -14,9 +14,9 @@ public class TcpInfo {
         System.out.println("Please enter the ip number of server, enter localhost");
         tcpIpForServer = ss.next();
         if (tcpIpForServer != "localhost") {
-            System.out.println("You should enter /`localhost/`");
+            System.out.println("We confirm only localhost");
         }
-        tcpIpForServer = "localhost";
+        tcpIpForServer = "127.0.0.1";
         return tcpIpForServer;
     }
 

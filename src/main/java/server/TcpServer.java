@@ -8,7 +8,8 @@ import java.net.Socket;
 
 public class TcpServer implements Runnable {
 
-    public static String host = com.bean.TcpInfo.tcpIpForServer;
+    public static String host = "127.0.0.1";
+    //com.bean.TcpInfo.tcpIpForServer;
     public static int port = com.bean.TcpInfo.tcpPortForServer;
     public static String whereWriteFile = "test.txt";
     public static String user = com.bean.User.user;
@@ -20,13 +21,13 @@ public class TcpServer implements Runnable {
             TcpServer.beginSendToClient(host, port, whereWriteFile, user, message);
         } catch (IOException ex) {
             System.out.println("Could not connect to server");
-            ex.printStackTrace();
+            ex.getMessage();
         }
     }
 
     public static void beginSendToClient(String host, int portNum,
             String whereWriteFile, String user, String message) throws IOException {
-        int FILE_SIZE = 6022386;
+        int FILE_SIZE = 6000000;
         int bytesRead;
         int current = 0;
         FileOutputStream fos = null;
@@ -43,8 +44,7 @@ public class TcpServer implements Runnable {
             current = bytesRead;
 
             do {
-                bytesRead
-                        = is.read(mybytearray, current, (mybytearray.length - current));
+                bytesRead = is.read(mybytearray, current, (mybytearray.length - current));
                 if (bytesRead >= 0) {
                     current += bytesRead;
                 }
@@ -52,8 +52,7 @@ public class TcpServer implements Runnable {
 
             bos.write(mybytearray, 0, current);
             bos.flush();
-            System.out.println("File " + whereWriteFile
-                    + " downloaded (" + current + " bytes read)");
+            System.out.println("File " + whereWriteFile + " downloaded (" + current + " bytes read)");
         } finally {
             if (fos != null) {
                 fos.close();
